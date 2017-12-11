@@ -1,0 +1,12 @@
+prefix=/root/ssl
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: BoringSSL-libcrypto
+Description: BoringSSL cryptography library
+Version: master
+Requires: 
+Libs: -L${libdir} -lcrypto
+Libs.private: -ldl -lpthread
+Cflags: -I${includedir}
