@@ -4,6 +4,7 @@
 #include <resolv.h>
 #include <stdlib.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <openssl/ssl.h>
@@ -32,7 +33,7 @@ static int NewSessionCallback(SSL *ssl, SSL_SESSION *session)
 
 static int run(SSL_CTX *ctx, struct sockaddr_in *dest)
 {
-    int sockfd, len;
+    int sockfd, len, flag = 1;
     char buffer[MAXBUF + 1];
 
     SSL *ssl;
@@ -42,6 +43,8 @@ static int run(SSL_CTX *ctx, struct sockaddr_in *dest)
         perror("Socket");
         exit(errno);
     }
+
+    setsockopt(sockfd,IPPROTO_TCP,TCP_NODELAY,(const char *)&flag,sizeof(int));
 
     if (connect(sockfd, (struct sockaddr *) dest, sizeof(*dest)) != 0) {
         perror("Connect ");
