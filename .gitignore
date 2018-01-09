@@ -1,5 +1,6 @@
 *.a
 *.o
 .tags
-example
-client
+ajob/example
+ssl/client
+ssl/include
